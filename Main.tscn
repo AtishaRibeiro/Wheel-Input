@@ -1,0 +1,151 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://models/b_button.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://scripts/wheel.gd" type="Script" id=2]
+[ext_resource path="res://scripts/VBoxContainer.gd" type="Script" id=4]
+[ext_resource path="res://WiiWheel.tscn" type="PackedScene" id=5]
+
+[sub_resource type="ProceduralSky" id=1]
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
+background_energy = 0.0
+background_canvas_max_layer = -1
+ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_energy = 8.61
+glow_intensity = 1.33
+glow_strength = 2.0
+glow_bloom = 1.0
+
+[sub_resource type="SpatialMaterial" id=3]
+params_diffuse_mode = 1
+params_blend_mode = 3
+metallic_specular = 1.0
+subsurf_scatter_enabled = true
+subsurf_scatter_strength = 1.0
+
+[sub_resource type="SpatialMaterial" id=4]
+params_diffuse_mode = 1
+params_blend_mode = 3
+metallic_specular = 1.0
+subsurf_scatter_enabled = true
+subsurf_scatter_strength = 1.0
+
+[sub_resource type="QuadMesh" id=5]
+
+[sub_resource type="SpatialMaterial" id=6]
+flags_unshaded = true
+albedo_color = Color( 0, 1, 0, 1 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.41418
+margin_right = 1.41418
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 2.24493
+margin_right = 1002.24
+margin_bottom = 500.0
+rect_min_size = Vector2( 1000, 500 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ghost_button" type="Button" parent="VBoxContainer"]
+margin_right = 111.0
+margin_bottom = 20.0
+size_flags_horizontal = 0
+text = "Load Ghost File"
+
+[node name="play_button" type="Button" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 38.0
+margin_bottom = 44.0
+size_flags_horizontal = 0
+text = "Play"
+
+[node name="record_button" type="Button" parent="VBoxContainer"]
+margin_top = 48.0
+margin_right = 56.0
+margin_bottom = 68.0
+size_flags_horizontal = 0
+text = "Record"
+
+[node name="transp_button" type="CheckButton" parent="VBoxContainer"]
+margin_top = 72.0
+margin_right = 155.0
+margin_bottom = 112.0
+size_flags_horizontal = 0
+text = "Transparent"
+align = 2
+
+[node name="DirectionalLight" type="SpotLight" parent="VBoxContainer"]
+transform = Transform( 0.968865, -1.15492e-07, 0.247591, -0.24272, -0.197384, 0.949803, 0.0488704, -0.980326, -0.191238, 0.98439, 5.82612, -2.54372 )
+light_energy = 4.42
+light_indirect_energy = 1.01
+light_specular = 1.0
+spot_range = 11.1562
+spot_angle = 36.1247
+
+[node name="Camera" type="Camera" parent="VBoxContainer"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5.22272, 0 )
+environment = SubResource( 2 )
+
+[node name="WiiWheel" parent="VBoxContainer" instance=ExtResource( 5 )]
+transform = Transform( 2.65431e-14, -1.62921e-07, 1, -1, -1.62921e-07, 0, 1.62921e-07, -1, -1.62921e-07, 0, 0, 0 )
+script = ExtResource( 2 )
+
+[node name="a_button" type="CSGCylinder" parent="VBoxContainer/WiiWheel"]
+transform = Transform( -4.37114e-08, 0.5, 4.37114e-08, 0, -2.18557e-08, 1, 1, 2.18557e-08, 0, -0.107204, 0.308881, 0.873446 )
+radius = 0.262
+height = 0.391
+sides = 13
+material = SubResource( 3 )
+
+[node name="b_button" type="CSGMesh" parent="VBoxContainer/WiiWheel"]
+transform = Transform( -4.07302e-08, 0.1, -1.09278e-08, 0, -4.37114e-09, -0.25, -0.25, -1.62921e-08, 3.55271e-15, -0.100817, 0.298295, -0.62157 )
+mesh = ExtResource( 1 )
+material = SubResource( 4 )
+
+[node name="FileDialog" type="FileDialog" parent="VBoxContainer"]
+margin_top = 76.0
+margin_right = 1000.0
+margin_bottom = 476.0
+rect_min_size = Vector2( 500, 400 )
+window_title = "Open a File"
+resizable = true
+mode = 0
+access = 2
+filters = PoolStringArray( "*.rkg; mkw ghost files" )
+current_dir = "/"
+current_path = "/"
+
+[node name="FileDialog2" type="FileDialog" parent="VBoxContainer"]
+margin_top = 76.0
+margin_right = 1000.0
+margin_bottom = 476.0
+rect_min_size = Vector2( 500, 400 )
+window_title = "Open a Directory"
+resizable = true
+mode = 2
+access = 2
+filters = PoolStringArray( "*.rkg; mkw ghost files" )
+current_dir = "/Users/atish/Downloads"
+current_path = "/Users/atish/Downloads/"
+
+[node name="bg_plane" type="CSGMesh" parent="VBoxContainer"]
+transform = Transform( 100, 0, 0, 0, -4.37114e-06, 1, 0, -100, -4.37114e-08, 0, -6.84897, 0 )
+mesh = SubResource( 5 )
+material = SubResource( 6 )
+[connection signal="pressed" from="VBoxContainer/ghost_button" to="VBoxContainer" method="_on_ghost_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/play_button" to="VBoxContainer" method="_on_play_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/record_button" to="VBoxContainer" method="_on_record_button_pressed"]
+[connection signal="toggled" from="VBoxContainer/transp_button" to="VBoxContainer" method="_on_transp_button_toggled"]
+[connection signal="file_selected" from="VBoxContainer/FileDialog" to="VBoxContainer" method="_on_FileDialog_file_selected"]
+[connection signal="dir_selected" from="VBoxContainer/FileDialog2" to="VBoxContainer" method="_on_FileDialog2_dir_selected"]

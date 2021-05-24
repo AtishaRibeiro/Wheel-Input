@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/wii2.obj-fed88ec94328ed6015904d387ffe9505.mesh"
+
+[deps]
+
+files=[ "res://.import/wii2.obj-fed88ec94328ed6015904d387ffe9505.mesh" ]
+
+source_file="res://models/wii2.obj"
+dest_files=[ "res://.import/wii2.obj-fed88ec94328ed6015904d387ffe9505.mesh", "res://.import/wii2.obj-fed88ec94328ed6015904d387ffe9505.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
